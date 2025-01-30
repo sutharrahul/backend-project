@@ -6,7 +6,7 @@ const port = 8001;
 connection("mongodb://127.0.0.1:27017/socialMedia-backend-01")
   .then(() => {
     app.listen(port, () => {
-      console("MongoDb connected");
+      console.log("MongoDb connected");
     });
   })
   .catch((err) => {

@@ -1,4 +1,4 @@
-import express, { urlencoded } from "express";
+import express from "express";
 import corse from "cors";
 import cookieParser from "cookie-parser";
 
@@ -19,6 +19,11 @@ app.use(cookieParser());
 // importing routers
 import userRouter from "./routers/user.routes.js";
 
+app.get("/", (req, res) => {
+  res.json({
+    message: "hello world",
+  });
+});
 app.use("/api/v1/user", userRouter);
 
 export { app };

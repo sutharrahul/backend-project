@@ -11,7 +11,7 @@ app.use(
   })
 );
 
-app.use(express.json); //can also set a limit app.use(express.json({limit : "16kb"}))
+app.use(express.json()); //can also set a limit app.use(express.json({limit : "16kb"}))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(cookieParser());
@@ -19,11 +19,6 @@ app.use(cookieParser());
 // importing routers
 import userRouter from "./routers/user.routes.js";
 
-app.get("/", (req, res) => {
-  res.json({
-    message: "hello world",
-  });
-});
 app.use("/api/v1/user", userRouter);
 
 export { app };

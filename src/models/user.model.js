@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 const userSchema = new Schema(
   {
-    userName: {
+    username: {
       type: String,
       required: true,
       unique: true,
@@ -54,7 +54,7 @@ const userSchema = new Schema(
 //  do this before save
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return; // to check is password modifyed or no
-  this.password = bcrypt.hash(this.password, 10);
+  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
@@ -69,7 +69,7 @@ userSchema.methods.generateAccessToken = function () {
     {
       _id: this._id,
       email: this._email,
-      userName: this.userName,
+      username: this.username,
       fullName: this.fullName,
     },
     process.env.ACCESS_TOKEN_SECRET,
@@ -78,6 +78,8 @@ userSchema.methods.generateAccessToken = function () {
     }
   );
 };
+
+// generateRefreshToken
 userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {

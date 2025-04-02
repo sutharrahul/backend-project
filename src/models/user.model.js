@@ -53,12 +53,12 @@ const userSchema = new Schema(
 // encript the password
 //  do this before save
 userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return; // to check is password modifyed or no
+  if (!this.isModified("password")) return next(); // to check is password modifyed or no
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
-// Custom Method
+// Custom Method to check password
 userSchema.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password);
 };

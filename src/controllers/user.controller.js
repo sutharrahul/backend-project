@@ -19,8 +19,8 @@ const generateAccessAndRefreshToken = async (userId) => {
 
     // refereshToken saved in DB
     await user.save({ validateBeforeSave: false });
-    //when were save this at this time our mongoose model kick in like password
-    // do not add any validation just save it
+    //when we are save this. Owr monsoose model will kick and as for user password so in this
+    // case we are using validateBeforeSave false means don't validate any thing just save it
 
     return { accessToke, refreshToken };
   } catch (error) {
@@ -154,8 +154,8 @@ const logoutUser = asyncHandler(async (req, res) => {
   User.findByIdAndUpdate(
     req.user._id,
     {
-      $set: {
-        refreshToken: undefined,
+      $unset: {
+        refreshToken: 1, //thi remove the field form document
       },
     },
     {
